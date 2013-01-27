@@ -3,7 +3,13 @@
 // Lista de adjacência usando matriz
 // Fon Fon
 public class AdjacencyMatrixGraph implements Graph {
-
+	private int mat[][]; //pesos do tipo inteiro
+	private int numVertices;
+	private int pos[]; //posição atual ao se percorrer os adjs de um vértice v
+	
+	public AdjacencyMatrixGraph(int numVertices){
+	}
+	
 	@Override
 	public void insertEdge(int node1, int node2, int weight) {
 		// TODO Auto-generated method stub
