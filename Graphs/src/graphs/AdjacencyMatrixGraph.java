@@ -7,8 +7,12 @@ public class AdjacencyMatrixGraph implements Graph {
 	private int mat[][]; //pesos do tipo inteiro
 	private int numVertices;
 	private int pos[]; //posição atual ao se percorrer os adjs de um vértice v
+	private String graphLabel;
 	
 	public AdjacencyMatrixGraph(int numVertices){
+	}
+
+	public AdjacencyMatrixGraph(String graphLabel, int numVertices){
 	}
 	
 	@Override
@@ -49,14 +53,23 @@ public class AdjacencyMatrixGraph implements Graph {
 
 	@Override
 	public int totalNodes() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.numVertices;
 	}
 
 	@Override
 	public void print() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public String getGraphLabel() {
+		return this.graphLabel;
+	}
+
+	@Override
+	public void setGraphLabel(String graphLabel) {
+		this.graphLabel = graphLabel; 
 	}
 
 }

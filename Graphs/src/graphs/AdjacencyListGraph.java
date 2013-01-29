@@ -7,8 +7,10 @@ import java.util.List;
 public class AdjacencyListGraph implements Graph {
 	
 	private static class Cell {
+
 		private int node;
 		private int weight;
+
 		public Cell(int node, int weight) {
 			this.node = node;
 			this.weight = weight;
@@ -25,12 +27,23 @@ public class AdjacencyListGraph implements Graph {
 		}
 	}
 
+	private String graphLabel;
 	private List<Cell>[] adj;	// Arranjo de listas.
 	private int totalNodes;		// Número total de nós no grafo.
 
 	@SuppressWarnings("unchecked")
-	public AdjacencyListGraph(int totalNodes) {
+	public AdjacencyListGraph(String graphLabel, int totalNodes) {
 		this.totalNodes = totalNodes;
+		this.graphLabel = graphLabel; 
+		this.adj = new LinkedList[totalNodes];
+		for(int i=0; i<this.totalNodes; i++) {
+			this.adj[i] = new LinkedList<Cell>();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public AdjacencyListGraph(int totalNodes) {
+		this.totalNodes = totalNodes; 
 		this.adj = new LinkedList[totalNodes];
 		for(int i=0; i<this.totalNodes; i++) {
 			this.adj[i] = new LinkedList<Cell>();
@@ -91,4 +104,13 @@ public class AdjacencyListGraph implements Graph {
 		}
 	}
 
+	@Override
+	public String getGraphLabel() {
+		return this.graphLabel;
+	}
+
+	@Override
+	public void setGraphLabel(String graphLabel) {
+		this.graphLabel = graphLabel; 
+	}
 }

@@ -30,5 +30,7 @@ public interface Graph {
 	abstract public Edge removeEdge(int node1, int node2) throws Exception;
 	abstract public int totalNodes();
 	abstract public void print();
+	abstract public void setGraphLabel(String graphLabel);
+	abstract public String getGraphLabel();
 
 }

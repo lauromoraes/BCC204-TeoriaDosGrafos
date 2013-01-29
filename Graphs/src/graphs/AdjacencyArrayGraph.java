@@ -8,8 +8,28 @@ public class AdjacencyArrayGraph implements Graph {
 	private int cab[], prox[], peso[];
 	private int pos[];
 	private int numVertex, proxDisponivel;
+	private String graphLabel;
 	
 	
+	public AdjacencyArrayGraph(String graphLabel, int numVertex,int numEdge)
+	{
+		this.graphLabel = graphLabel;
+		int tam = numVertex + 2*numEdge;
+		this.cab = new int[tam];
+		this.peso = new int[tam];
+		this.prox = new int[tam];
+		this.numVertex = numVertex;
+		this.pos = new int[this.numVertex];
+		for(int i=0; i<this.numVertex; i++)
+		{
+			this.prox[i] = 0;
+			this.cab[i] = i;
+			this.peso[i] = 0;
+			this.pos[i] = i;
+		}
+		this.proxDisponivel = this.numVertex;
+	}
+
 	public AdjacencyArrayGraph(int numVertex,int numEdge)
 	{
 		int tam = numVertex + 2*numEdge;
@@ -131,6 +151,16 @@ public class AdjacencyArrayGraph implements Graph {
 		}
 		
 		
+	}
+
+	@Override
+	public String getGraphLabel() {
+		return this.graphLabel;
+	}
+
+	@Override
+	public void setGraphLabel(String graphLabel) {
+		this.graphLabel = graphLabel; 
 	}
 
 }
