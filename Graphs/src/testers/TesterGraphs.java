@@ -2,7 +2,6 @@ package testers;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import graphs.Graph;
@@ -13,8 +12,9 @@ public class TesterGraphs {
 	public TesterGraphs() {}
 
 	// Metodo de leitura para o caso da entrada ser consistente
-	public void readFromFile(String fileName) {
+	public Graph readFromFile(String fileName, GraphFactory factory, String typeName) {
 		File file = new File(fileName);
+		Graph graph = null;
 		if( !file.isFile() ) {
 			System.out.println("ERRO");
 			System.exit(-1);
@@ -25,21 +25,19 @@ public class TesterGraphs {
 			String line;
 			int totalNodes, totalEdges, node1, node2, weight;
 			StringTokenizer token;
-			Graph.Edge edge;
 
 			// Reconhece o valor do numero de vertices
 			line = buffer.readLine();
 			token = new StringTokenizer(line);
 			totalNodes = Integer.parseInt( token.nextToken() );
-			System.out.println( totalNodes + " Edges");
 
 			// Reconhece o valor do numero de arestas
 			line = buffer.readLine();
 			token = new StringTokenizer(line);
 			totalEdges = Integer.parseInt( token.nextToken() );
-			System.out.println( totalEdges + " Edges");
 
-			// TODO - Criar novo grafo...
+			// Cria novo grafo
+			graph = factory.getGraph(typeName, totalNodes, totalEdges);
 
 			// Le as arestas => no origem, no destino, peso aresta
 			while( ( line = buffer.readLine() ) != null ) {
@@ -47,14 +45,16 @@ public class TesterGraphs {
 				node1 = Integer.parseInt( token.nextToken() );
 				node2 = Integer.parseInt( token.nextToken() );
 				weight = Integer.parseInt( token.nextToken() );
-				System.out.println( node1 + ", " + node2 + ", " + weight);
-				// TODO - Inserir aresta no grafo...
-				//edge = new Graph.Edge(node1, node2, weight);
+				// Insere aresta no grafo
+				graph.insertEdge(node1, node2, weight);
+				//System.out.println( node1 + ", " + node2 + ", " + weight);
+				
 			}
 			buffer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return graph;
 	}
 
 // ===================== SE HOUVER MAIS DE UM CASO DE TESTE POR ARQUIVO, ADAPTAR ESTE METODO ======================== 
@@ -113,8 +113,12 @@ public class TesterGraphs {
 		
 		//String path = "C:\\Users\\Lauro Moraes\\Documents\\GitHub\\BCC204-TeoriaDosGrafos\\Graphs\\src\\testers\\";
 		TesterGraphs tester = new TesterGraphs();
+		GraphFactory factory = new GraphFactory(); 
 
-		tester.readFromFile("in01.txt");
+		Graph graph = tester.readFromFile("in01.txt", factory, "list");
+		graph.print();
+
+		
 
 		System.out.println("FIM");
 	}	

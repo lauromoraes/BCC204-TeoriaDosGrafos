@@ -10,7 +10,7 @@ public class GraphFactory {
 
 	private static GraphFactory instance;
 
-	private GraphFactory() {}
+	public GraphFactory() {}
 
 	// Lazy Initiation
 	public static GraphFactory getFactory() {
@@ -22,10 +22,13 @@ public class GraphFactory {
 		switch(typeName.toLowerCase()){
 		case "array":
 			graph = new AdjacencyArrayGraph(graphLabel, totalNodes, totalEdges);
+			break;
 		case "list":
 			graph = new AdjacencyListGraph(graphLabel, totalNodes);
+			break;
 		case "matrix":
 			graph = new AdjacencyMatrixGraph(graphLabel, totalNodes);
+			break;
 		default:
 			graph = null;
 		}
@@ -37,10 +40,13 @@ public class GraphFactory {
 		switch(typeName.toLowerCase()){
 		case "array":
 			graph = new AdjacencyArrayGraph(totalNodes, totalEdges);
+			break;
 		case "list":
 			graph = new AdjacencyListGraph(totalNodes);
+			break;
 		case "matrix":
 			graph = new AdjacencyMatrixGraph(totalNodes);
+			break;
 		default:
 			graph = null;
 		}
@@ -52,10 +58,13 @@ public class GraphFactory {
 		switch(typeName.toLowerCase()){
 		case "array":
 			graph = new AdjacencyArrayGraph(totalNodes, 0);
+			break;
 		case "list":
 			graph = new AdjacencyListGraph(totalNodes);
+			break;
 		case "matrix":
 			graph = new AdjacencyMatrixGraph(totalNodes);
+			break;
 		default:
 			graph = null;
 		}

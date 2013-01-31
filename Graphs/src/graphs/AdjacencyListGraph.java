@@ -29,13 +29,16 @@ public class AdjacencyListGraph implements Graph {
 
 	private String graphLabel;
 	private List<Cell>[] adj;	// Arranjo de listas.
+	private int[] pos;			// Array de posicoes.
 	private int totalNodes;		// Número total de nós no grafo.
+	private int totalEdges;		// Número total de arestas no grafo.
 
 	@SuppressWarnings("unchecked")
 	public AdjacencyListGraph(String graphLabel, int totalNodes) {
-		this.totalNodes = totalNodes;
+		this.totalNodes = totalNodes;		
 		this.graphLabel = graphLabel; 
 		this.adj = new LinkedList[totalNodes];
+		this.pos = new int[totalNodes];
 		for(int i=0; i<this.totalNodes; i++) {
 			this.adj[i] = new LinkedList<Cell>();
 		}
@@ -52,7 +55,7 @@ public class AdjacencyListGraph implements Graph {
 
 	@Override
 	public void insertEdge(int node1, int node2, int weight) {
-		Cell item = new Cell(node2, weight);
+		Cell item = new Cell( (node2), weight);
 		this.adj[node1].add(item);
 	}
 
@@ -70,14 +73,21 @@ public class AdjacencyListGraph implements Graph {
 	@Override
 	public Edge adjacencyListFirst(int node1) {
 		Cell item = (Cell) this.adj[node1].get(0);
-		return item != null ? new Edge(node1, item.getNode(), item.getWeight()) : null;
+		if(item != null) {
+			this.pos[node1] = 0;
+			return ( new Edge(node1, item.getNode(), item.getWeight()) );
+		}
+		return null;
 	}
 
 	@Override
 	public Edge adjacencyNext(int node1) {
-		// Mudar e testar!!!
-		Cell item = (Cell) this.adj[node1].iterator().next(); // Definir
-		return item != null ? new Edge(node1, item.getNode(), item.getWeight()) : null;
+		Cell item = (Cell) this.adj[ ++(this.pos[node1]) ];
+		if(item != null) {
+			this.pos[node1] = 0;
+			return ( new Edge(node1, item.getNode(), item.getWeight()) );
+		}
+		return null;
 	}
 
 	@Override
@@ -94,12 +104,14 @@ public class AdjacencyListGraph implements Graph {
 
 	@Override
 	public void print() {
-		for(int i=0; i<this.totalNodes; i++) {
-			System.out.println("Node "+i+":");
-			Cell item = (Cell) this.adj[i].get(0);
-			while(item != null) {
-				System.out.println(" "+item.getNode()+" ("+item.getWeight()+")");
-				//item = (Celula) this.adj[i].iterator().next();
+		int i, listSize;
+		Cell item;
+		for(int j=0; j<this.totalNodes; j++) {
+			listSize = this.adj[j].size();
+			System.out.println( "Node " + j + ": " );
+			for( i=0; i < listSize; i++) {
+				item = (Cell) this.adj[j].get(i);
+				System.out.println( " " + item.getNode() + " (" + item.getWeight() + ")" );
 			}
 		}
 	}
@@ -112,5 +124,34 @@ public class AdjacencyListGraph implements Graph {
 	@Override
 	public void setGraphLabel(String graphLabel) {
 		this.graphLabel = graphLabel; 
+	}
+
+	@Override
+	public void setTotalNodes(int total) {
+		this.totalNodes = total;
+	}
+
+	@Override
+	public int getTotalNodes() {
+		return this.totalNodes;
+	}
+
+	@Override
+	public void setTotalEdges(int total) {
+		this.totalEdges = total;
+	}
+
+	@Override
+	public int getTotalEdges() {
+		return this.totalEdges;
+	}
+
+	@Override
+	public void insertNonOrientedEdge(int node1, int node2, int weight) {
+		// Grafos nao orientados nao possuem lacos
+		if(node1 != node2){
+			this.insertEdge(node1, node2, weight);
+			this.insertEdge(node2, node1, weight);
+		}
 	}
 }

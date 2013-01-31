@@ -7,7 +7,7 @@ public class AdjacencyArrayGraph implements Graph {
 
 	private int cab[], prox[], peso[];
 	private int pos[];
-	private int numVertex, proxDisponivel;
+	private int numVertex, proxDisponivel, numEdge;
 	private String graphLabel;
 	
 	
@@ -15,6 +15,7 @@ public class AdjacencyArrayGraph implements Graph {
 	{
 		this.graphLabel = graphLabel;
 		int tam = numVertex + 2*numEdge;
+		this.numEdge = numEdge;
 		this.cab = new int[tam];
 		this.peso = new int[tam];
 		this.prox = new int[tam];
@@ -161,6 +162,35 @@ public class AdjacencyArrayGraph implements Graph {
 	@Override
 	public void setGraphLabel(String graphLabel) {
 		this.graphLabel = graphLabel; 
+	}
+
+	@Override
+	public void setTotalNodes(int total) {
+		this.numVertex = total;
+	}
+
+	@Override
+	public int getTotalNodes() {
+		return this.numVertex;
+	}
+
+	@Override
+	public void setTotalEdges(int total) {
+		this.numEdge = total;
+	}
+
+	@Override
+	public int getTotalEdges() {
+		return this.numEdge;
+	}
+
+	@Override
+	public void insertNonOrientedEdge(int node1, int node2, int weight) {
+		// Grafos nao orientados nao possuem lacos
+		if(node1 != node2){
+			this.insertEdge(node1, node2, weight);
+			this.insertEdge(node2, node1, weight);
+		}
 	}
 
 }

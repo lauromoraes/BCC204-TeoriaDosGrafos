@@ -23,6 +23,7 @@ public interface Graph {
 	}
 
 	abstract public void insertEdge(int node1, int node2, int weight);
+	abstract public void insertNonOrientedEdge(int node1, int node2, int weight);
 	abstract public boolean existsEdge(int node1, int node2);
 	abstract public boolean adjacencyListEmpty(int node1);
 	abstract public Edge adjacencyListFirst(int node1);
@@ -32,5 +33,9 @@ public interface Graph {
 	abstract public void print();
 	abstract public void setGraphLabel(String graphLabel);
 	abstract public String getGraphLabel();
+	abstract public void setTotalNodes(int total);
+	abstract public int getTotalNodes();
+	abstract public void setTotalEdges(int total);
+	abstract public int getTotalEdges();
 
 }

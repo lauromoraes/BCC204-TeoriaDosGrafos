@@ -6,6 +6,7 @@ package graphs;
 public class AdjacencyMatrixGraph implements Graph {
 	private int mat[][]; //pesos do tipo inteiro
 	private int numVertices;
+	private int numArestas;
 	private int pos[]; //posição atual ao se percorrer os adjs de um vértice v
 	private String graphLabel;
 	
@@ -70,6 +71,35 @@ public class AdjacencyMatrixGraph implements Graph {
 	@Override
 	public void setGraphLabel(String graphLabel) {
 		this.graphLabel = graphLabel; 
+	}
+
+	@Override
+	public void setTotalNodes(int total) {
+		this.numVertices = total;
+	}
+
+	@Override
+	public int getTotalNodes() {
+		return this.numVertices;
+	}
+
+	@Override
+	public void setTotalEdges(int total) {
+		this.numArestas = total;
+	}
+
+	@Override
+	public int getTotalEdges() {
+		return this.numArestas;
+	}
+
+	@Override
+	public void insertNonOrientedEdge(int node1, int node2, int weight) {
+		// Grafos nao orientados nao possuem lacos
+		if(node1 != node2){
+			this.insertEdge(node1, node2, weight);
+			this.insertEdge(node2, node1, weight);
+		}
 	}
 
 }
