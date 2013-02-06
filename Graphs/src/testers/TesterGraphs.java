@@ -115,9 +115,22 @@ public class TesterGraphs {
 		TesterGraphs tester = new TesterGraphs();
 		GraphFactory factory = new GraphFactory(); 
 
-		Graph graph = tester.readFromFile("in01.txt", factory, "list");
-		graph.print();
+		Graph graph;
 
+		System.out.println("Testando grafo represantado por: listas de adjacencia.");
+		graph = tester.readFromFile("in01.txt", factory, "list");
+		graph.print();
+		System.out.println();
+
+		System.out.println("Testando grafo represantado por: vetores de adjacencia.");
+		graph = tester.readFromFile("in01.txt", factory, "array");
+		graph.print();
+		System.out.println();
+
+//		System.out.println("Testando grafo represantado por: matrix de adjacencia.");
+//		graph = tester.readFromFile("in01.txt", factory, "matrix");
+//		graph.print();
+//		System.out.println();
 		
 
 		System.out.println("FIM");
