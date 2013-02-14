@@ -4,10 +4,10 @@ package graphs;
 // Lista de adjacência usando matriz
 // Fon Fon
 public class AdjacencyMatrixGraph implements Graph {
-	private int mat[][]; //pesos do tipo inteiro
+	private int mat[][]; // pesos do tipo inteiro
 	private int numVertices;
 	private int numArestas;
-	private int pos[]; //posição atual ao se percorrer os adjs de um vértice v
+	private int pos[]; // posição atual ao se percorrer os adjs de um vértice arbitrario
 	private String graphLabel;
 	
 	public AdjacencyMatrixGraph(int numVertices){

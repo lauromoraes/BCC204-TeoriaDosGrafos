@@ -41,6 +41,7 @@ public class AdjacencyListGraph implements Graph {
 		this.pos = new int[totalNodes];
 		for(int i=0; i<this.totalNodes; i++) {
 			this.adj[i] = new LinkedList<Cell>();
+			this.pos[i] = 0;
 		}
 	}
 
@@ -48,8 +49,10 @@ public class AdjacencyListGraph implements Graph {
 	public AdjacencyListGraph(int totalNodes) {
 		this.totalNodes = totalNodes; 
 		this.adj = new LinkedList[totalNodes];
+		this.pos = new int[totalNodes];
 		for(int i=0; i<this.totalNodes; i++) {
 			this.adj[i] = new LinkedList<Cell>();
+			this.pos[i] = 0;
 		}
 	}
 
@@ -72,9 +75,11 @@ public class AdjacencyListGraph implements Graph {
 
 	@Override
 	public Edge adjacencyListFirst(int node1) {
-		Cell item = (Cell) this.adj[node1].get(0);
+		this.pos[node1] = 0;
+		if( this.adj[node1].size() <= 0 )
+			return null;
+		Cell item = (Cell) this.adj[node1].get( this.pos[node1] );
 		if(item != null) {
-			this.pos[node1] = 0;
 			return ( new Edge(node1, item.getNode(), item.getWeight()) );
 		}
 		return null;
@@ -82,9 +87,11 @@ public class AdjacencyListGraph implements Graph {
 
 	@Override
 	public Edge adjacencyNext(int node1) {
-		Cell item = (Cell) this.adj[ ++(this.pos[node1]) ];
+		int pos = ++(this.pos[node1]);
+		if( this.adj[node1].size() <= pos )
+			return null;
+		Cell item = (Cell) this.adj[node1].get( pos );
 		if(item != null) {
-			this.pos[node1] = 0;
 			return ( new Edge(node1, item.getNode(), item.getWeight()) );
 		}
 		return null;

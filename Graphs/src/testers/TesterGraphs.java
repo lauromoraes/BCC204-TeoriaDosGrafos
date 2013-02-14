@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.StringTokenizer;
 
+import process.DepthFirstSearch;
+import process.TopologicalSorting;
+
 import graphs.Graph;
 import factory.GraphFactory;
 
@@ -45,10 +48,13 @@ public class TesterGraphs {
 				node1 = Integer.parseInt( token.nextToken() );
 				node2 = Integer.parseInt( token.nextToken() );
 				weight = Integer.parseInt( token.nextToken() );
-				// Insere aresta no grafo
-				graph.insertEdge(node1, node2, weight);
-				//System.out.println( node1 + ", " + node2 + ", " + weight);
-				
+
+				// Insere aresta orientada no grafo
+				//graph.insertEdge(node1, node2, weight);
+
+				// Insere aresta nao-orientada no grafo
+				graph.insertNonOrientedEdge(node1, node2, weight);
+
 			}
 			buffer.close();
 		} catch (Exception e) {
@@ -108,31 +114,41 @@ public class TesterGraphs {
 //			e.printStackTrace();
 //		}
 //	}
+	public static void testCase(String type) {
 
-	public static void main( String args[] ) throws Exception {
-		
 		//String path = "C:\\Users\\Lauro Moraes\\Documents\\GitHub\\BCC204-TeoriaDosGrafos\\Graphs\\src\\testers\\";
 		TesterGraphs tester = new TesterGraphs();
-		GraphFactory factory = new GraphFactory(); 
+		GraphFactory factory = new GraphFactory();
 
 		Graph graph;
+		DepthFirstSearch dfs;
+		TopologicalSorting topSort;
 
-		System.out.println("Testando grafo represantado por: listas de adjacencia.");
-		graph = tester.readFromFile("in01.txt", factory, "list");
-		graph.print();
+		/* Criando grafo */
 		System.out.println();
-
-		System.out.println("Testando grafo represantado por: vetores de adjacencia.");
-		graph = tester.readFromFile("in01.txt", factory, "array");
+		System.out.println("Testando grafo represantado por: " + type);
+		graph = tester.readFromFile("in01.txt", factory, type);
 		graph.print();
-		System.out.println();
 
-//		System.out.println("Testando grafo represantado por: matrix de adjacencia.");
-//		graph = tester.readFromFile("in01.txt", factory, "matrix");
-//		graph.print();
-//		System.out.println();
+		/* Busca em Profundidade */
+		dfs = new DepthFirstSearch(graph);
+		dfs.depthFirstSearch();
+		System.out.println("DFS = " + dfs.getMaxTime() + "\n");
+
+		/* Ordenacao Topologica */
+		topSort = new TopologicalSorting(graph);
+		topSort.topologicalSorting();
+	}
+
+	public static void main( String args[] ) throws Exception {
+
+//		String[] types = { "list", "array", "matrix" };
+		String[] types = { "list", "array" };
+		for(int i=0; i < types.length; i++) {
+			testCase(types[i]);
+		}
 		
 
-		System.out.println("FIM");
+		System.out.printf("\n************* FIM *************\n");
 	}	
 }
