@@ -4,6 +4,7 @@ package graphs;
 // Lista de adjac�ncia usando matriz
 // Fon Fon
 public class AdjacencyMatrixGraph implements Graph {
+<<<<<<< HEAD:Graphs/src/graphs/AdjacencyMatrixGraph.java
 	private int mat[][]; // pesos do tipo inteiro
 	private int numVertices;
 	private int numArestas;
@@ -16,6 +17,9 @@ public class AdjacencyMatrixGraph implements Graph {
 	public AdjacencyMatrixGraph(String graphLabel, int numVertices){
 	}
 	
+=======
+
+>>>>>>> parent of bb30bbf... Primeira alteração:Graphs/src/AdjacencyMatrixGraph.java
 	@Override
 	public void insertEdge(int node1, int node2, int weight) {
 		// TODO Auto-generated method stub
