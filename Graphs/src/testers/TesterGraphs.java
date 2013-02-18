@@ -31,12 +31,10 @@ public class TesterGraphs {
 
 			// Reconhece o valor do numero de vertices
 			line = buffer.readLine();
-			token = new StringTokenizer(line);
+			token = new StringTokenizer(line, " ");
 			totalNodes = Integer.parseInt( token.nextToken() );
 
 			// Reconhece o valor do numero de arestas
-			line = buffer.readLine();
-			token = new StringTokenizer(line);
 			totalEdges = Integer.parseInt( token.nextToken() );
 
 			// Cria novo grafo
@@ -45,14 +43,15 @@ public class TesterGraphs {
 			// Le as arestas => no origem, no destino, peso aresta
 			while( ( line = buffer.readLine() ) != null ) {
 				token = new StringTokenizer(line, " ");
-				node1 = Integer.parseInt( token.nextToken() );
-				node2 = Integer.parseInt( token.nextToken() );
+				node1 = Integer.parseInt( token.nextToken() ) - 1;
+				node2 = Integer.parseInt( token.nextToken() ) - 1;
 				weight = Integer.parseInt( token.nextToken() );
 
 				// Insere aresta orientada no grafo
 				//graph.insertEdge(node1, node2, weight);
 
 				// Insere aresta nao-orientada no grafo
+//				System.out.println("<< " + (node1+1) + " - " + (node2+1) + " - "+weight);
 				graph.insertNonOrientedEdge(node1, node2, weight);
 
 			}
@@ -127,8 +126,9 @@ public class TesterGraphs {
 		/* Criando grafo */
 		System.out.println();
 		System.out.println("Testando grafo represantado por: " + type);
-		graph = tester.readFromFile("in01.txt", factory, type);
-		graph.print();
+//		graph = tester.readFromFile("in01.txt", factory, type);
+		graph = tester.readFromFile("gr_300_44850_2_10.gr", factory, type);
+//		graph.print();
 
 		/* Busca em Profundidade */
 		dfs = new DepthFirstSearch(graph);
@@ -144,9 +144,10 @@ public class TesterGraphs {
 
 //		String[] types = { "list", "array", "matrix" };
 		String[] types = { "list", "array" };
-		for(int i=0; i < types.length; i++) {
-			testCase(types[i]);
-		}
+//		for(int i=0; i < types.length; i++) {
+//			testCase(types[i]);
+//		}
+		testCase(types[0]);
 		
 
 		System.out.printf("\n************* FIM *************\n");

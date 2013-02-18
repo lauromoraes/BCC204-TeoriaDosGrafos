@@ -35,11 +35,11 @@ public class AdjacencyListGraph implements Graph {
 
 	@SuppressWarnings("unchecked")
 	public AdjacencyListGraph(String graphLabel, int totalNodes) {
-		this.totalNodes = totalNodes;		
+		this.totalNodes = totalNodes;
 		this.graphLabel = graphLabel; 
-		this.adj = new LinkedList[totalNodes];
-		this.pos = new int[totalNodes];
-		for(int i=0; i<this.totalNodes; i++) {
+		this.adj = new LinkedList[this.totalNodes];
+		this.pos = new int[this.totalNodes];
+		for(int i=0; i <= (this.totalNodes+1); i++) {
 			this.adj[i] = new LinkedList<Cell>();
 			this.pos[i] = 0;
 		}
@@ -48,8 +48,8 @@ public class AdjacencyListGraph implements Graph {
 	@SuppressWarnings("unchecked")
 	public AdjacencyListGraph(int totalNodes) {
 		this.totalNodes = totalNodes; 
-		this.adj = new LinkedList[totalNodes];
-		this.pos = new int[totalNodes];
+		this.adj = new LinkedList[this.totalNodes];
+		this.pos = new int[this.totalNodes];
 		for(int i=0; i<this.totalNodes; i++) {
 			this.adj[i] = new LinkedList<Cell>();
 			this.pos[i] = 0;
@@ -58,6 +58,7 @@ public class AdjacencyListGraph implements Graph {
 
 	@Override
 	public void insertEdge(int node1, int node2, int weight) {
+//		System.out.println(">> " + node1 + " - " + node2 + " - " + weight);
 		Cell item = new Cell( (node2), weight);
 		this.adj[node1].add(item);
 	}
@@ -70,6 +71,9 @@ public class AdjacencyListGraph implements Graph {
 
 	@Override
 	public boolean adjacencyListEmpty(int node1) {
+//		System.out.print("<<>> ");
+//		System.out.print(node1 + " - ");
+//		System.out.println(this.adj[node1].isEmpty());
 		return (this.adj[node1].isEmpty());
 	}
 
@@ -115,10 +119,10 @@ public class AdjacencyListGraph implements Graph {
 		Cell item;
 		for(int j=0; j<this.totalNodes; j++) {
 			listSize = this.adj[j].size();
-			System.out.println( "Node " + j + ": " );
+			System.out.println( "Node " + (j+1) + ": " );
 			for( i=0; i < listSize; i++) {
 				item = (Cell) this.adj[j].get(i);
-				System.out.println( " " + item.getNode() + " (" + item.getWeight() + ")" );
+				System.out.println( " " + (item.getNode()+1) + " (" + item.getWeight() + ")" );
 			}
 		}
 	}

@@ -25,6 +25,7 @@ public class TopologicalSorting {
 		this.orderedList = new LinkedList<Integer>();
 	}
 	private int visitDFS (int u, int time, int color[]) {
+//		System.out.println("--- " + (u+1) );
 		color[u] = grey;
 		this.d[u] = ++time;
 		if(!this.graph.adjacencyListEmpty(u)) {
@@ -42,6 +43,7 @@ public class TopologicalSorting {
 		this.t[u] = ++time;
 //		System.out.println("TOP: " + u);
 		this.orderedList.add(0, u);
+//		System.out.println("+++ " + (u+1) );
 		
 		return time;
 	}
@@ -62,9 +64,9 @@ public class TopologicalSorting {
 		System.out.println("Lista ordenada");
 		int u;
 		for(u=0; u<(totalNodes-1); u++) {
-			System.out.print( this.orderedList.get(u) + ", " );
+			System.out.print( (this.orderedList.get(u)+1) + ", " );
 		}
-		System.out.println( this.orderedList.get(u) );
+		System.out.println( (this.orderedList.get(u)+1) );
 	}
 	public int getDistance (int node) {
 		return this.d[node];
