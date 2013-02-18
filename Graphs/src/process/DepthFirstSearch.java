@@ -20,6 +20,7 @@ public class DepthFirstSearch {
 		this.origin = new int[n];
 	}
 	private int visitDFS (int u, int time, int color[]) {
+		System.out.print(" ");
 		color[u] = grey;
 		this.d[u] = ++time;
 		if(!this.graph.adjacencyListEmpty(u)) {

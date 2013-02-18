@@ -71,8 +71,7 @@ public class AdjacencyListGraph implements Graph {
 
 	@Override
 	public boolean adjacencyListEmpty(int node1) {
-//		System.out.print("<<>> ");
-//		System.out.print(node1 + " - ");
+//		System.out.print("<<>> " + node1 + " - ");
 //		System.out.println(this.adj[node1].isEmpty());
 		return (this.adj[node1].isEmpty());
 	}

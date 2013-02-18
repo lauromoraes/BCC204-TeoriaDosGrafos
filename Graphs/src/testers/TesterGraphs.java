@@ -52,7 +52,7 @@ public class TesterGraphs {
 
 				// Insere aresta nao-orientada no grafo
 //				System.out.println("<< " + (node1+1) + " - " + (node2+1) + " - "+weight);
-				graph.insertNonOrientedEdge(node1, node2, weight);
+				graph.insertEdge(node1, node2, weight);
 
 			}
 			buffer.close();
@@ -127,17 +127,21 @@ public class TesterGraphs {
 		System.out.println();
 		System.out.println("Testando grafo represantado por: " + type);
 //		graph = tester.readFromFile("in01.txt", factory, type);
-		graph = tester.readFromFile("gr_300_44850_2_10.gr", factory, type);
+		graph = tester.readFromFile("gr_10_30_2_10.gr", factory, type);
 //		graph.print();
 
 		/* Busca em Profundidade */
 		dfs = new DepthFirstSearch(graph);
 		dfs.depthFirstSearch();
-		System.out.println("DFS = " + dfs.getMaxTime() + "\n");
+		System.out.println("\nDFS = " + dfs.getMaxTime() + "\n");
 
 		/* Ordenacao Topologica */
 		topSort = new TopologicalSorting(graph);
+		long tempoInicial = System.currentTimeMillis();
 		topSort.topologicalSorting();
+		long tempoFinal = System.currentTimeMillis();
+		System.out.println("\nTempo = " + (tempoFinal - tempoInicial) / 1000.0 + "s");
+		
 	}
 
 	public static void main( String args[] ) throws Exception {
