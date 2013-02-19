@@ -25,7 +25,7 @@ public class TopologicalSorting {
 		this.orderedList = new LinkedList<Integer>();
 	}
 	private int visitDFS (int u, int time, int color[]) {
-		System.out.print(" ");
+//		System.out.print(" ");
 		color[u] = grey;
 		this.d[u] = ++time;
 		if(!this.graph.adjacencyListEmpty(u)) {

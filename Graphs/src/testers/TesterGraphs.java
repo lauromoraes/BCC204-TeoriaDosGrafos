@@ -127,7 +127,7 @@ public class TesterGraphs {
 		System.out.println();
 		System.out.println("Testando grafo represantado por: " + type);
 //		graph = tester.readFromFile("in01.txt", factory, type);
-		graph = tester.readFromFile("gr_10_30_2_10.gr", factory, type);
+		graph = tester.readFromFile("gr_100_100000_2_10.gr", factory, type);
 //		graph.print();
 
 		/* Busca em Profundidade */
