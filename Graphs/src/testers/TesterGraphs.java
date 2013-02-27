@@ -1,7 +1,11 @@
 package testers;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import process.DepthFirstSearch;
@@ -113,21 +117,19 @@ public class TesterGraphs {
 //			e.printStackTrace();
 //		}
 //	}
-	public static void testCase(String type) {
+	public static void testCase(String type, String in) {
 
-		//String path = "C:\\Users\\Lauro Moraes\\Documents\\GitHub\\BCC204-TeoriaDosGrafos\\Graphs\\src\\testers\\";
 		TesterGraphs tester = new TesterGraphs();
 		GraphFactory factory = new GraphFactory();
-
-		Graph graph;
-		DepthFirstSearch dfs;
 		TopologicalSorting topSort;
+		DepthFirstSearch dfs;
+		Graph graph;
 
 		/* Criando grafo */
 		System.out.println();
 		System.out.println("Testando grafo represantado por: " + type);
 //		graph = tester.readFromFile("in01.txt", factory, type);
-		graph = tester.readFromFile("gr_100_100000_2_10.gr", factory, type);
+		graph = tester.readFromFile(in + ".gr", factory, type);
 //		graph.print();
 
 		/* Busca em Profundidade */
@@ -141,18 +143,40 @@ public class TesterGraphs {
 		topSort.topologicalSorting();
 		long tempoFinal = System.currentTimeMillis();
 		System.out.println("\nTempo = " + (tempoFinal - tempoInicial) / 1000.0 + "s");
-		
+
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(in+"_topSort.txt"));
+			List<Integer> l = topSort.getOrderedList();
+			String outString = "";
+			for( Integer i : l ) {
+				outString += String.valueOf(i+1);
+			}
+			out.write(outString+'\0');
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main( String args[] ) throws Exception {
 
+		/* Diferentes tipos de representacao de um grafo */
 //		String[] types = { "list", "array", "matrix" };
 		String[] types = { "list", "array" };
+
+		/* Arquivos de entrada */
+		String[] entries = { "gr_10_30_2_10", "gr_10_4950_2_10", "gr_50_124750_2_10", "gr_100_100000_2_10", "gr_200_19900_2_10", "gr_300_44850_2_10", "gr_10000_300000_2_10" };
+
+		/* Testa para cada tipo de representacao todos os casos de teste */
 //		for(int i=0; i < types.length; i++) {
-//			testCase(types[i]);
+//			for(int j=0; j < entries.length; j++) {
+//				testCase(types[i], entries[j]);
+//			}
 //		}
-		testCase(types[0]);
-		
+
+		/* Testa um tipo de representacao com um caso de teste */
+		testCase(types[0], entries[0]);
 
 		System.out.printf("\n************* FIM *************\n");
 	}	

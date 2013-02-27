@@ -63,10 +63,17 @@ public class TopologicalSorting {
 
 		System.out.println("Lista ordenada");
 		int u;
-		for(u=0; u<(totalNodes-1); u++) {
-			System.out.print( (this.orderedList.get(u)+1) + ", " );
+
+//		for(u=0; u<(totalNodes-1); u++) {
+//			System.out.print( (this.orderedList.get(u)+1) + ", " );
+//		}
+//		System.out.println( (this.orderedList.get(u)+1) );
+
+		for(u=0; u<totalNodes; u++) {
+			System.out.print( (this.orderedList.get(u)+1) );
 		}
-		System.out.println( (this.orderedList.get(u)+1) );
+		System.out.println();
+
 		System.out.println( "Size: " + this.orderedList.size() );
 	}
 	public int getDistance (int node) {
@@ -77,6 +84,9 @@ public class TopologicalSorting {
 	}
 	public int getOrigin (int node) {
 		return this.origin[node];
+	}
+	public List<Integer> getOrderedList () {
+		return this.orderedList;
 	}
 	public int getMaxTime() {
 		int lenght = this.t.length;
