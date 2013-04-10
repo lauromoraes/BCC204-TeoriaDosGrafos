@@ -1,55 +1,27 @@
 package algorithms;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Random;
-import java.util.SortedMap;
-import java.util.SortedSet;
 import java.util.TreeMap;
-import java.util.TreeSet;
+
+
+import extras.Entry;
 
 import graphs.Graph;
-import graphs.Graph.Edge;
 
 public class DominantSet {
-	private static class Entry {
-		private int label;
-		private int cost;
-		private int links;
-		public Entry(int label, int cost, int links) {
-			this.label = label;
-			this.cost = cost;
-			this.links = links;
-		}
-		public int getLabel() { 
-			return( this.label ); 
-		}
-		public int getCost() { 
-			return( this.cost ); 
-		}
-		public int getLinks() { 
-			return( this.links ); 
-		}
-		public void setLabel( int label ) {
-			this.label = label;
-		}
-		public void setCost( int cost ) {
-			this.cost = cost;
-		}
-		public void setLinks( int links ) {
-			this.links = links;
-		}
-		public String toString() {
-			return( "(" + this.label + ", " + this.cost + ", " + this.links + ")" );
-		}
-	}
+
 	public DominantSet() {
 		
 	}
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void greedMethod(Graph graph, double alpha, long seed) {
+		
+		// Define semente
+		Random rand = new Random();
+		rand.setSeed(seed);
+		
+		// Define o tipo de comparacao de entre as entradas
+		int evaluation_type = 1;
 		
 		// Inicializa o conjunto solucao vazio
 		LinkedList<Entry> solution_set = new LinkedList<Entry>();
@@ -57,37 +29,73 @@ public class DominantSet {
 		// Inicializa o conjunto de candidatos base
 		TreeMap<Integer, Entry> candidates = new TreeMap<Integer, Entry>();
 		
-		// Inicializa o conjunto de candidatos base
+		// Inicializa o conjunto de candidatos restrito
 		LinkedList<Entry> restricted_candidate_list = new LinkedList<Entry>();
 		
+		Entry entry_min, entry_max;
+		entry_min = entry_max = new Entry(0,graph.getNodeWeight(0),graph.getTotalLinks(0), evaluation_type);
+		
 		// Preenche a lista de candidatos
-		for( int i=0; i<graph.getTotalNodes(); i++ ) {
+		for( int i=1; i<graph.getTotalNodes(); i++ ) {
+			
+			// Define os dados basicos das entradas
 			int weight = graph.getNodeWeight(i);
 			int links = graph.getTotalLinks(i);
-			Entry entry = new Entry( i, weight, links );
-			candidates.put( i, entry );
-		}
-		
-		for(Map.Entry<Integer, Entry> e : candidates.entrySet()) {
-			restricted_candidate_list.add( e.getValue() );
-			System.out.print( e.getValue().toString() );
-		}
-		System.out.println();
-		
-		// Ordena pelos pesos
-		Collections.sort(restricted_candidate_list, new Comparator() {
-			public int compare(Object o1, Object o2) {
-				return( (Comparable) (evaluation(1, ((Entry) (o1)) )) ).compareTo( evaluation( 1, ((Entry) (o2)) ) );
+			
+			// Cria nova entrada
+			Entry entry = new Entry( i, weight, links, evaluation_type );
+			
+			// Atualiza o min e o max
+			if(entry_min.getEvaluationCost() > entry.getEvaluationCost()) {
+				entry_min = entry;
+			} else if(entry_max.getEvaluationCost() < entry.getEvaluationCost()) {
+				entry_max = entry;
 			}
-		});
-		
-		for(Entry e : restricted_candidate_list) {
-			System.out.print( e.toString() );
+			
+			// Atualiza o conjunto com a entrada
+			candidates.put( i, entry );
+			
+			// Impressao para debug
+			System.out.println( entry.toString() );
 		}
-		System.out.println();
+		System.out.println("-------------------------");
 		
-		Random rand = new Random();
-		rand.setSeed(seed);
+		// Define as limite superior da lista restrita de candidatos
+		double min = entry_min.getEvaluationCost();
+		double max = entry_max.getEvaluationCost();
+		double upper_bound = min + ( alpha * ( max - min ) );
+		// Impressao para debug
+		System.out.println(min + " - " + max + ", " + upper_bound);
+		
+		// Preenche a RCL (Restricted candidates List - Lista Restrita de Candidatos)
+		for(Entry e : candidates.values()) {
+			if( e.getEvaluationCost() < upper_bound ) {
+				restricted_candidate_list.add(e);
+				// Impressao para debug
+				System.out.println(e.toString());
+			}
+		}
+		
+		while(candidates.size() > 0) {
+			int pos = rand.nextInt( restricted_candidate_list.size() );
+			Entry selected = restricted_candidate_list.remove(pos);
+			// Remove os adjacentes a selected a atualiza novos valores e ordens
+			
+		}	
+	
+		// Ordena pelos pesos
+//		Collections.sort( restricted_candidate_list, new EntryComparator(evaluation_type) );
+//		
+//		for(Entry e : restricted_candidate_list) {
+//			System.out.println( e.toString() + " - " + e.getEvaluationCost() );
+//		}
+//		System.out.println();
+		
+		
+
+		
+		
+		
 //		synchronized (candidate_set) {
 //			while(candidate_set.size() > 0) {
 //				double index_min = candidate_set.peekFirst().getSecond();
@@ -139,41 +147,4 @@ public class DominantSet {
 		
 		
 	}
-	public double evaluation(int evaluation_type, Entry entry) {
-		try {
-			int cost = entry.getCost();
-			int links = entry.getLinks();
-			switch(evaluation_type) { // Escolhe o tipo de funcao de avaliacao
-				case 1:
-					return( (double) (cost/links) );
-				case 2:
-					return( (double) ( (cost) / (links^2) ) );
-				case 3:
-					return( (double) ( Math.sqrt(cost) / (links^2) ) );
-				default:
-					return( (double) (0) );
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return(-1); // ERRO
-	}
-	
-//	static <K,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
-//	    SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
-//	        new Comparator<Map.Entry<K,V>>() {
-//	            @Override
-//	            public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
-//	                int res = e1.getValue().compareTo(e2.getValue());
-//	                if (e1.getKey().equals(e2.getKey())) {
-//	                    return res;
-//	                } else {
-//	                    return res != 0 ? res : 1;
-//	                }
-//	            }
-//	        }
-//	    );
-//	    sortedEntries.addAll(map.entrySet());
-//	    return sortedEntries;
-//	}
 }

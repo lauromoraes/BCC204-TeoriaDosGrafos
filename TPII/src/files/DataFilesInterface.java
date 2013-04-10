@@ -70,11 +70,11 @@ public class DataFilesInterface {
 				/* Percorre todas as colunas */
 				while( token.hasMoreTokens() ) { // Enquanto ouver mais colunas na linha
 					if( token.nextToken().equals("1") ) { // Na matriz binaria, onde possui 1, e onde ha arestas
-						if( row != col ) { // Ignora-se os lacos
+//						if( row != col ) { // Ignora-se os lacos
 							System.out.println(cont + " = " + (row+1) + " - " + (col+1) );
 							this.edges[row].add(col); // Adiciona no arranjo de listas a aresta
 							cont++; // Incrementa-se o total de arestas encontradas
-						}
+//						}
 					}
 					col++;
 				}
