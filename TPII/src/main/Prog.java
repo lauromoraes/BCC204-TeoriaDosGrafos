@@ -85,14 +85,21 @@ public class Prog {
 	//		DominantSet set = new DominantSet();
 	//		set.greedMethod(graphs.get("array"), 0.2, 1, 10);
 			int t = 0;
-			int t_max = 10000;
-			MinimumCostDominantSet min_dom_set = new MinimumCostDominantSet(graphs.get("array"), 1, t);
+			
+			// Calibrar estes AQUI!!!
+			int t_max = 5000;
+			int type = 1; // Pode ser 1, 2 ou 3
+			double alpha = 0.25;
+			
+			
+			MinimumCostDominantSet min_dom_set = new MinimumCostDominantSet(graphs.get("array"), type, t);
 			while( t++ < t_max ) {
 				min_dom_set.setSeed(t);
-				min_dom_set.constructGreed(0.25);
+				min_dom_set.constructGreed(alpha);
 				//min_dom_set.localSearch();
 				//System.out.println( t + " = " + min_dom_set.getCost() );
 			}
+			
 			// AQUI AILTON SAIDAS -> FAZER CADA CAMPO DESTE SAIR NUMA LINHA DE UM ARQUIVO
 			// SEPARADO POR ;
 			System.out.println( ">>> BEST (" + filesNames[i] + ") = " + bests_knows[i]);
