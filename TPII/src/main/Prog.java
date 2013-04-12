@@ -93,6 +93,8 @@ public class Prog {
 				//min_dom_set.localSearch();
 				//System.out.println( t + " = " + min_dom_set.getCost() );
 			}
+			// AQUI AILTON SAIDAS -> FAZER CADA CAMPO DESTE SAIR NUMA LINHA DE UM ARQUIVO
+			// SEPARADO POR ;
 			System.out.println( ">>> BEST (" + filesNames[i] + ") = " + bests_knows[i]);
 			System.out.println( ">>> FINDED = " + min_dom_set.getBestCost() );
 			System.out.println( ">>> DIFF = " + (min_dom_set.getBestCost() -  bests_knows[i]) );
